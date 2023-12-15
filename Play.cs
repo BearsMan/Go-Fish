@@ -48,6 +48,137 @@ public class Play : MonoBehaviour
 	public void CheckForMatch()
 	{
 		bool switchPlayers = false;
+		List<GameObject> searchingHands = null;
+		List<GameObject> receivingHands = null;
+		GameObject playerCard = null;
+		int found = 0;
+		switch (CurrentPlayer)
+		{
+			case PlayerNumber.One:
+				{
+					searchingHands = PlayerTwoCards;
+					receivingHands = PlayerOneCards;
+				}
+				break;
+
+				
+			case PlayerNumber.Two:
+				{
+                    searchingHands = PlayerOneCards;
+					receivingHands = PlayerTwoCards;
+				}
+				break;
+		}
+		List<GameObject> Transfers = new List<GameObject>();
+		Feedback += "Hit";
+		foreach (GameObject g in searchingHands)
+		{
+			if (g.activeInHierarchy == true)
+			{
+				Card cardClass = g.GetComponent<Card>();
+				if (cardClass.CardType == PlayerGuess)
+				{
+					found++;
+					Feedback += "Adding" + cardClass.CardType + "Of" + cardClass + "To Your Hand";
+					Transfers.Add(g);
+					g.SetActive(false);
+				}
+
+			}
+		}
+		foreach (GameObject g in Transfers)
+		{
+			receivingHands.Add(g);
+			searchingHands.Remove(g);
+			g.SetActive(true);
+		}
+		Transfers.Clear();
+		if (found == 0)
+		{
+			Feedback = "Miss";
+			switchPlayers = true;
+			// playerCard = Draw();
+			if (playerCard != null)
+			{
+				Card cardClass = playerCard.GetComponent<Card>();
+				receivingHands.Add(playerCard);
+				Feedback += "Fishing added a" + cardClass.CardType + "of" + cardClass.CardSuit + "to your hand";
+				switchPlayers = cardClass.CardType == PlayerGuess ? false : true;
+			}
+			if (switchPlayers == true)
+			{
+				CurrentPlayer = CurrentPlayer == PlayerNumber.One ? PlayerNumber.Two : PlayerNumber.One;
+				UiController.GetInstance().Feedback = Feedback;
+            }
+			void CheckForMatch()
+	{
+		bool switchPlayers = false;
+		List<GameObject> searchingHands = null;
+		List<GameObject> receivingHands = null;
+		GameObject playerCard = null;
+		int found = 0;
+		switch (CurrentPlayer)
+		{
+			case PlayerNumber.One:
+				{
+					searchingHands = PlayerTwoCards;
+					receivingHands = PlayerOneCards;
+				}
+				break;
+
+				
+			case PlayerNumber.Two:
+				{
+                    searchingHands = PlayerOneCards;
+					receivingHands = PlayerTwoCards;
+				}
+				break;
+		}
+		List<GameObject> Transfers = new List<GameObject>();
+		Feedback += "Hit";
+		foreach (GameObject g in searchingHands)
+		{
+			if (g.activeInHierarchy == true)
+			{
+				Card cardClass = g.GetComponent<Card>();
+				if (cardClass.CardType == PlayerGuess)
+				{
+					found++;
+					Feedback += "Adding" + cardClass.CardType + "Of" + cardClass + "To Your Hand";
+					Transfers.Add(g);
+					g.SetActive(false);
+				}
+
+			}
+		}
+		foreach (GameObject g in Transfers)
+		{
+			receivingHands.Add(g);
+			searchingHands.Remove(g);
+			g.SetActive(true);
+		}
+		Transfers.Clear();
+		if (found == 0)
+		{
+			Feedback = "Miss";
+			switchPlayers = true;
+			// playerCard = Draw();
+			if (playerCard != null)
+			{
+				Card cardClass = playerCard.GetComponent<Card>();
+				receivingHands.Add(playerCard);
+				Feedback += "Fishing added a" + cardClass.CardType + "of" + cardClass.CardSuit + "to your hand";
+				switchPlayers = cardClass.CardType == PlayerGuess ? false : true;
+			}
+			if (switchPlayers == true)
+			{
+				CurrentPlayer = CurrentPlayer == PlayerNumber.One ? PlayerNumber.Two : PlayerNumber.One;
+				UiController.GetInstance().Feedback = Feedback;
+                // UpdateGui();
+            }
+		}
+	}
+		}
 	}
     private void Deal()
 	{
