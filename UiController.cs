@@ -8,7 +8,8 @@ public class UiController : MonoBehaviour
 
 	private static UiController Instance = null;
 
-	public static UiController GetInstance()
+    [System.Obsolete]
+    public static UiController GetInstance()
 	{
 		if (Instance == null)
 		{
