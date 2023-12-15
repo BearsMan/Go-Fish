@@ -36,6 +36,8 @@ public class Play : MonoBehaviour
 		GameDeck = deckClass.GameDeck;
 		Deal();
 	}
+
+    [System.Obsolete]
     void Update()
     {
 		PlayerGuess = UiController.GetInstance().Guess;
@@ -45,7 +47,9 @@ public class Play : MonoBehaviour
 			CheckForMatch();
 		}
     }
-	public void CheckForMatch()
+
+    [System.Obsolete]
+    public void CheckForMatch()
 	{
 		bool switchPlayers = false;
 		List<GameObject> searchingHands = null;
